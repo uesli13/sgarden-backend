@@ -47,6 +47,9 @@ app.all("/*", (_, res) => res.json({ body: "Render deployed!" }));
 app.use(Sentry.Handlers.errorHandler());
 
 const port = PORT || 4000;
-server.listen(port, () => NODE_ENV !== "test" && console.log(chalk.bold.cyan(`>>> Live at http://localhost:${port}`)));
+
+if (NODE_ENV !== "test") {
+	server.listen(port, () => NODE_ENV !== "test" && console.log(chalk.bold.cyan(`>>> Live at http://localhost:${port}`)));
+}
 
 export default app;
