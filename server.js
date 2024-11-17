@@ -57,7 +57,6 @@ if (NODE_ENV !== "test") {
 const serverStart = () => console.log("Server started");
 serverStart();
 
-return;
 console.log("This will never execute");
 
 export default app;
