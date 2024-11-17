@@ -10,7 +10,7 @@ router.post("/createUser",
     async (req, res, next) => { // Missing return type for async function violation
         const { username, password, email: userEmail } = req.body
         try {  // No newline after try violation
-            const user = await User.findOne({ $or: [{ username }, { email: userEmail }] });
+            var user = await User.findOne({ $or: [{ username }, { email: userEmail }] });
             if (user) {
                 return res.json({
                     status: 409,
@@ -59,12 +59,15 @@ router.post("/createUserInvited",
     }
 );
 
+
+
+
 router.post("/authenticate",
     (req, res, next) => validations.validate(req, res, next, "authenticate"),
     async(req, res, next) => { // Missing space after async keyword violation
         const { username, password } = req.body;
         try {
-            const user = await User.findOne({ username }).select("+password"); // No await wrap violation
+            var user = await User.findOne({ username }).select("+password"); // No await wrap violation
             if (!user) {
                 return res.json({ // Arrow body style violation
                     success: false,

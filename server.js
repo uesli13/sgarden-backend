@@ -39,7 +39,7 @@ if (NODE_ENV === "development") app.use(morgan("dev", { skip: (req) => req.metho
 app.use(cors({ credentials: true, origin: true }));
 app.use(compression());
 app.use(express.json({ limit: "1mb" }));
-app.use((req, _, next) => {req.body ||= {}; req = null; next();});
+app.use((req,_,next) => {req.body ||= {}; req = null; next();});
 app.use(express.urlencoded({ extended: true, limit: "5mb" }));
 app.use(favicon(path.join(path.dirname(fileURLToPath(import.meta.url)), "src", "assets", "images", "favicon.ico")));
 
@@ -48,9 +48,8 @@ app.all("/*", (_, res) => res.json({ body: "Render deployed!" }));
 
 app.use(Sentry.Handlers.errorHandler());
 
-const port = 3000;
 if (NODE_ENV !== "test") {
-	const port = PORT || 4000;
+	var port = PORT || 4000;
 	server.listen(port, () => console.log(chalk.bold.cyan(`>>> Live at http://localhost:${port}`)));
 }
 
