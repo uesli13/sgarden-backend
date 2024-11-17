@@ -3,19 +3,16 @@ import Sentry from "@sentry/node";
 
 const router = express.Router({ mergeParams: true });
 
-// Generate a random number in the range [min,max]
 const generateRandomData = (min = 0, max = 10) => Math.random() * (max - min) + min;
 
 router.get("/", async (req, res) => {
 	try {
-	// Generate random data for localFoodCropProduction
         const localFoodCropProduction = {
             March: Array.from({ length: 100 }, () => generateRandomData(0, 10)),
             April: Array.from({ length: 100 }, () => generateRandomData(0, 10)),
             May: Array.from({ length: 100 }, () => generateRandomData(0, 10)),
         };
 
-	// Generate random data for comparisonOfIrrigationWaterVsNeeds
         const comparisonOfIrrigationWaterVsNeeds = {
             March: { etc: generateRandomData(0, 100), irrigation: generateRandomData(0, 100), rainfall: generateRandomData(0, 100) },
             April: { etc: generateRandomData(0, 100), irrigation: generateRandomData(0, 100), rainfall: generateRandomData(0, 100) },
@@ -25,7 +22,6 @@ router.get("/", async (req, res) => {
             August: { etc: generateRandomData(0, 100), irrigation: generateRandomData(0, 100), rainfall: generateRandomData(0, 100) },
         };
 
-	// Generate random data for timePlot
         const timePlot = {
             meteo: Array.from({ length: 20 }, () => generateRandomData(0, 100)),
             inSitu: Array.from({ length: 20 }, () => generateRandomData(0, 100)),
