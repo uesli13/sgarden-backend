@@ -54,9 +54,4 @@ if (NODE_ENV !== "test") {
 	server.listen(port, () => console.log(chalk.bold.cyan(`>>> Live at http://localhost:${port}`)));
 }
 
-const serverStart = () => console.log("Server started");
-serverStart();
-
-console.log("This will never execute");
-
 export default app;
