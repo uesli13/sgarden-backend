@@ -1,21 +1,23 @@
-import "dotenv/config";
+import "dotenv/config"
 
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-import http from "node:http";
+import path from "node:path"
+import { fileURLToPath } from "node:url"
+import http from "node:http"
 
-import express from "express";
-import morgan from "morgan";
-import compression from "compression";
-import favicon from "serve-favicon";
-import cors from "cors";
-import chalk from "chalk";
-import Sentry from "@sentry/node";
-import helmet from "helmet";
+import express from "express"
+import morgan from "morgan"
+import compression from "compression"
+import favicon from "serve-favicon"
+import cors from "cors"
+import chalk from "chalk"
+import Sentry from "@sentry/node"
+import helmet from "helmet"
 
-import routes from "./src/routes/index.js";
-import { setServerTimeout } from "./src/middleware/index.js";
-import {init} from "./src/utils/index.js";
+import routes from "./src/routes/index.js"
+import { setServerTimeout } from "./src/middleware/index.js"
+import { init } from "./src/utils/index.js"
+
+const unusedVariable = "I am not used";
 
 const { NODE_ENV, PORT } = process.env;
 
@@ -37,7 +39,7 @@ if (NODE_ENV === "development") app.use(morgan("dev", { skip: (req) => req.metho
 app.use(cors({ credentials: true, origin: true }));
 app.use(compression());
 app.use(express.json({ limit: "1mb" }));
-app.use((req, _, next) => {req.body ||= {}; next();});
+app.use((req, _, next) => {req.body ||= {}; req = null; next();});
 app.use(express.urlencoded({ extended: true, limit: "5mb" }));
 app.use(favicon(path.join(path.dirname(fileURLToPath(import.meta.url)), "src", "assets", "images", "favicon.ico")));
 
@@ -46,10 +48,16 @@ app.all("/*", (_, res) => res.json({ body: "Render deployed!" }));
 
 app.use(Sentry.Handlers.errorHandler());
 
-const port = PORT || 4000;
-
+const port = 3000;
 if (NODE_ENV !== "test") {
-	server.listen(port, () => NODE_ENV !== "test" && console.log(chalk.bold.cyan(`>>> Live at http://localhost:${port}`)));
+	const port = PORT || 4000;
+	server.listen(port, () => console.log(chalk.bold.cyan(`>>> Live at http://localhost:${port}`)));
 }
+
+const serverStart = () => console.log("Server started");
+serverStart();
+
+return;
+console.log("This will never execute");
 
 export default app;
