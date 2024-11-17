@@ -17,6 +17,8 @@ import routes from "./src/routes/index.js";
 import { setServerTimeout } from "./src/middleware/index.js";
 import { init } from "./src/utils/index.js";
 
+const unusedVariable = "I am not used";
+
 const { NODE_ENV, PORT } = process.env;
 
 Sentry.init({ enabled: NODE_ENV === "production" });
@@ -46,7 +48,9 @@ app.all("/*", (_, res) => res.json({ body: "It works!" }));
 
 app.use(Sentry.Handlers.errorHandler());
 
-const port = PORT || 4000;
-server.listen(port, () => NODE_ENV !== "test" && console.log(chalk.bold.cyan(`>>> Live at http://localhost:${port}`)));
+if (NODE_ENV !== "test") {
+	var port = PORT || 4000;
+	server.listen(port, () => console.log(chalk.bold.cyan(`>>> Live at http://localhost:${port}`)));
+}
 
 export default app;
